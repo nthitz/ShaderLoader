@@ -16,7 +16,7 @@
     this.pathToChunks     = pathToChunks || pathToShaders;
 
     this.shaderChunks = {};
-
+    this.requestedChunks = [];
     this.shadersLoaded = 0;
     this.shadersToLoad = 0;
 
@@ -44,7 +44,12 @@
 
   */
   ShaderLoader.prototype.loadShaderChunk = function( type ){
-
+    
+    if( this.requestedChunks.indexOf(type) !== -1) {
+      return;
+    }
+    this.requestedChunks.push( type );
+    
     var path = this.pathToChunks + "/" + type + ".glsl";
 
     var self = this;
